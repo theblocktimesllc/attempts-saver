@@ -1,4 +1,3 @@
-// render.js
 // Table rendering, sorting indicators, stats
 
 import { formatDateForDisplay, parseDateFlexible } from "./utils.js";

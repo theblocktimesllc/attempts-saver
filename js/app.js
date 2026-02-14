@@ -1,4 +1,3 @@
-// app.js
 // Entry point: wire DOM elements and initialize UI module
 
 import { initUI } from "./ui.js";

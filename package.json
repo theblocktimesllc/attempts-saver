@@ -1,16 +1,14 @@
 {
   "name": "attempts-saver",
-  "version": "1.1.0",
-  "description": "Web App to Save Geometry Dash Attempts",
-  "author": "Axionyx Group",
-  "license": "CC-BY-NC-ND-4.0",
-  "type": "module",
+  "version": "2.0.0",
+  "description": "Geometry Dash Attempts Saver - Save your Geometry Dash Attempts",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "start": "npx serve . -s -l 3000",
+    "dev": "netlify dev",
+    "predeploy": "echo \"No build step required for static site\"",
+    "deploy": "echo \"Deploy handled by Netlify from repo\""
   },
-  "devDependencies": {
-    "vite": "^5.0.0"
-  }
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {}
 }

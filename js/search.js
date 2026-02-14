@@ -1,4 +1,3 @@
-// search.js
 // Debounced search helper
 
 export function attachSearch(inputEl, onChange, delay = 200) {

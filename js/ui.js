@@ -2,10 +2,10 @@
 // UI bindings and orchestration for actions (save, update, delete, export, import, filters)
 
 import { loadAttempts, saveAttempts, sanitizeImportedAttempts, exportAttemptsToJsonString } from "./storage.js";
-import { generateUid, parseDateFlexible, formatDateForDisplay } from "./utils.js";
+import { generateUid, parseDateFlexible, formatDateForDisplay, toNumberSafe, normalizeStringForSearch } from "./utils.js";
 import { notify, confirmAsync } from "./notifications.js";
 import { validateAllFields, buildFieldConfig, attachClearOnInput, attachNumericInputHandlers } from "./validation.js";
-import { renderTable } from "./render.js";
+import { renderTable, updateSortIndicators, updateStats } from "./render.js";
 
 /**
  * Initialize UI with DOM references.
@@ -68,8 +68,8 @@ export function initUI(dom) {
       const ok = validateAllFields(fieldConfig);
       if (!ok) return;
 
-      const parsedDate = parseDateFlexible(dom.dateEl.value.trim());
-      const attemptsVal = parseInt(dom.attemptsEl.value.trim(), 10);
+      const parsedDate = parseDateFlexible(String(dom.dateEl.value || "").trim());
+      const attemptsVal = parseInt(String(dom.attemptsEl.value || "").trim(), 10);
       if (!Number.isFinite(attemptsVal)) {
         notify("Attempts must be a valid number.");
         return;
@@ -77,12 +77,12 @@ export function initUI(dom) {
 
       const attemptObj = {
         _uid: generateUid(),
-        name: dom.levelNameEl.value.trim(),
-        id: dom.levelIdEl.value.trim(),
-        type: dom.idTypeEl.value || "online",
-        date: parsedDate ? formatDateForDisplay(parsedDate) : dom.dateEl.value.trim(),
+        name: String(dom.levelNameEl.value || "").trim(),
+        id: String(dom.levelIdEl.value || "").trim(),
+        type: dom.idTypeEl && dom.idTypeEl.value ? dom.idTypeEl.value : "online",
+        date: parsedDate ? formatDateForDisplay(parsedDate) : String(dom.dateEl.value || "").trim(),
         attempts: attemptsVal,
-        notes: dom.notesEl.value ? dom.notesEl.value.trim() : ""
+        notes: dom.notesEl && dom.notesEl.value ? String(dom.notesEl.value).trim() : ""
       };
 
       attemptsList.push(attemptObj);
@@ -103,8 +103,8 @@ export function initUI(dom) {
       const ok = validateAllFields(fieldConfig);
       if (!ok) return;
 
-      const parsedDate = parseDateFlexible(dom.dateEl.value.trim());
-      const attemptsVal = parseInt(dom.attemptsEl.value.trim(), 10);
+      const parsedDate = parseDateFlexible(String(dom.dateEl.value || "").trim());
+      const attemptsVal = parseInt(String(dom.attemptsEl.value || "").trim(), 10);
       if (!Number.isFinite(attemptsVal)) {
         notify("Attempts must be a valid number.");
         return;
@@ -121,12 +121,12 @@ export function initUI(dom) {
       const existing = attemptsList[idx];
       attemptsList[idx] = {
         ...existing,
-        name: dom.levelNameEl.value.trim(),
-        id: dom.levelIdEl.value.trim(),
-        type: dom.idTypeEl.value || "online",
-        date: parsedDate ? formatDateForDisplay(parsedDate) : dom.dateEl.value.trim(),
+        name: String(dom.levelNameEl.value || "").trim(),
+        id: String(dom.levelIdEl.value || "").trim(),
+        type: dom.idTypeEl && dom.idTypeEl.value ? dom.idTypeEl.value : "online",
+        date: parsedDate ? formatDateForDisplay(parsedDate) : String(dom.dateEl.value || "").trim(),
         attempts: attemptsVal,
-        notes: dom.notesEl.value ? dom.notesEl.value.trim() : ""
+        notes: dom.notesEl && dom.notesEl.value ? String(dom.notesEl.value).trim() : ""
       };
 
       saveAttempts(attemptsList);
@@ -144,31 +144,51 @@ export function initUI(dom) {
     });
   }
 
+  // Robust filtering using safe parsing and normalization
   function applyFilters(list) {
     let out = Array.isArray(list) ? [...list] : [];
 
-    if (dom.filterTypeEl && dom.filterTypeEl.value && dom.filterTypeEl.value !== "all") {
-      out = out.filter(i => i.type === dom.filterTypeEl.value);
+    // Type filter (normalize)
+    const typeVal = dom.filterTypeEl && dom.filterTypeEl.value ? String(dom.filterTypeEl.value).toLowerCase() : "all";
+    if (typeVal && typeVal !== "all") {
+      out = out.filter(i => String(i.type || "").toLowerCase() === typeVal);
     }
 
-    const minA = dom.filterMinAttemptsEl && dom.filterMinAttemptsEl.value ? Number(dom.filterMinAttemptsEl.value) : null;
-    const maxA = dom.filterMaxAttemptsEl && dom.filterMaxAttemptsEl.value ? Number(dom.filterMaxAttemptsEl.value) : null;
-    if (minA !== null) out = out.filter(i => Number(i.attempts) >= minA);
-    if (maxA !== null) out = out.filter(i => Number(i.attempts) <= maxA);
-
-    if (dom.filterDateFromEl && dom.filterDateFromEl.value) {
-      const from = parseDateFlexible(dom.filterDateFromEl.value);
-      if (from) out = out.filter(i => {
-        const d = parseDateFlexible(i.date);
-        return d && d >= from;
+    // Attempts min / max (safe numbers)
+    const minA = dom.filterMinAttemptsEl ? toNumberSafe(dom.filterMinAttemptsEl.value) : null;
+    const maxA = dom.filterMaxAttemptsEl ? toNumberSafe(dom.filterMaxAttemptsEl.value) : null;
+    if (minA !== null) {
+      out = out.filter(i => {
+        const ai = toNumberSafe(i.attempts);
+        return ai !== null && ai >= minA;
       });
+    }
+    if (maxA !== null) {
+      out = out.filter(i => {
+        const ai = toNumberSafe(i.attempts);
+        return ai !== null && ai <= maxA;
+      });
+    }
+
+    // Date range (inclusive for 'to')
+    if (dom.filterDateFromEl && dom.filterDateFromEl.value) {
+      const from = parseDateFlexible(String(dom.filterDateFromEl.value).trim());
+      if (from) {
+        out = out.filter(i => {
+          const d = parseDateFlexible(String(i.date || "").trim());
+          return d && d.getTime() >= from.getTime();
+        });
+      }
     }
     if (dom.filterDateToEl && dom.filterDateToEl.value) {
-      const to = parseDateFlexible(dom.filterDateToEl.value);
-      if (to) out = out.filter(i => {
-        const d = parseDateFlexible(i.date);
-        return d && d <= to;
-      });
+      const to = parseDateFlexible(String(dom.filterDateToEl.value).trim());
+      if (to) {
+        const toEnd = new Date(to.getFullYear(), to.getMonth(), to.getDate(), 23, 59, 59, 999);
+        out = out.filter(i => {
+          const d = parseDateFlexible(String(i.date || "").trim());
+          return d && d.getTime() <= toEnd.getTime();
+        });
+      }
     }
 
     return out;
@@ -186,6 +206,7 @@ export function initUI(dom) {
     });
   }
 
+  // Sorting headers
   document.querySelectorAll(".sortable").forEach(th => {
     th.addEventListener("click", () => {
       const col = th.getAttribute("data-col");
@@ -239,6 +260,7 @@ export function initUI(dom) {
     });
   }
 
+  // Import: merge + dedupe (import overrides existing on id/_uid conflict)
   if (dom.importBtn && dom.importFileInput) {
     dom.importBtn.addEventListener("click", () => dom.importFileInput.click());
 
@@ -253,11 +275,25 @@ export function initUI(dom) {
             notify("Imported file must be an array of attempts.");
             return;
           }
-          const sanitized = sanitizeImportedAttempts(parsed);
-          attemptsList = sanitized;
+          const imported = sanitizeImportedAttempts(parsed);
+
+          // Merge existing attemptsList with imported, dedupe by id if present, else by _uid
+          const map = new Map();
+          // keep existing first
+          attemptsList.forEach(item => {
+            const key = (item && item.id) ? String(item.id) : (item && item._uid) ? String(item._uid) : generateUid();
+            map.set(key, item);
+          });
+          // imported items override existing items with same id/_uid
+          imported.forEach(item => {
+            const key = (item && item.id) ? String(item.id) : (item && item._uid) ? String(item._uid) : generateUid();
+            map.set(key, item);
+          });
+
+          attemptsList = Array.from(map.values());
           saveAttempts(attemptsList);
           renderCurrentTable();
-          notify("Import successful.");
+          notify(`Import successful. ${imported.length} items merged.`);
         } catch (err) {
           console.error("Import error:", err);
           notify("Failed to import file. Make sure it's valid JSON.");
@@ -322,8 +358,15 @@ export function initUI(dom) {
   function renderCurrentTable() {
     let list = Array.isArray(attemptsList) ? [...attemptsList] : [];
 
-    const q = dom.searchInputEl && dom.searchInputEl.value ? dom.searchInputEl.value.trim().toLowerCase() : "";
-    if (q) list = list.filter(i => String(i.name || "").toLowerCase().includes(q));
+    // Normalized search across name, notes and id
+    const qRaw = dom.searchInputEl && dom.searchInputEl.value ? dom.searchInputEl.value : "";
+    const q = normalizeStringForSearch(qRaw);
+    if (q) {
+      list = list.filter(i => {
+        const haystack = `${i.name || ""} ${i.notes || ""} ${i.id || ""}`;
+        return normalizeStringForSearch(haystack).includes(q);
+      });
+    }
 
     list = applyFilters(list);
 
@@ -380,6 +423,10 @@ export function initUI(dom) {
   return {
     getAttempts: () => attemptsList,
     render: renderCurrentTable,
-    resetForm: resetFormUI
+    resetForm: resetFormUI,
+    reload: () => {
+      attemptsList = loadAttempts();
+      renderCurrentTable();
+    }
   };
 }

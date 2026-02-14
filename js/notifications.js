@@ -1,4 +1,3 @@
-// notifications.js
 // Non-blocking notifications and confirm modal
 
 export function ensureNotificationContainer() {

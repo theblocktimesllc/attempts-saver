@@ -1,4 +1,3 @@
-// storage.js
 // Local storage helpers (English-only identifiers)
 
 const STORAGE_KEY = "attempts_saver_data";

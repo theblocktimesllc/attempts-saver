@@ -1,16 +1,19 @@
 // js/appBridge.js
 // Browser-compatible replacement for Electron preload API.
 // Keeps the same global shape used by your renderer code.
+// NOTE: uses the same storage key as storage.js to avoid mismatch.
 
 (function () {
   if (window.appBridge) return;
+
+  const STORAGE_KEY = "attempts_saver_data";
 
   function safeParse(raw) {
     try { return JSON.parse(raw); } catch (e) { return null; }
   }
 
   function saveLocalAttempts(arr) {
-    try { localStorage.setItem("attempts", JSON.stringify(arr)); } catch (e) { console.error("saveLocalAttempts", e); }
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); } catch (e) { console.error("saveLocalAttempts", e); }
   }
 
   window.appBridge = {
@@ -20,11 +23,11 @@
       async listAttempts() {
         try {
           const res = await fetch("/api/attempts");
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return await res.json();
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          return await res.json();
         } catch (e) {
           console.warn("attemptsAPI.listAttempts fallback", e);
-          const raw = localStorage.getItem("attempts");
+          const raw = localStorage.getItem(STORAGE_KEY);
           return raw ? safeParse(raw) || [] : [];
         }
       },
@@ -36,8 +39,8 @@
           return await res.json();
         } catch (e) {
           console.warn("attemptsAPI.getAttempt fallback", e);
-          const arr = safeParse(localStorage.getItem("attempts")) || [];
-          return arr.find(a => String(a.id) === String(id)) || null;
+          const arr = safeParse(localStorage.getItem(STORAGE_KEY)) || [];
+          return arr.find(a => String(a.id) === String(id) || String(a._uid) === String(id)) || null;
         }
       },
 
@@ -52,8 +55,8 @@
           return await res.json();
         } catch (e) {
           console.warn("attemptsAPI.updateAttempt fallback", e);
-          const arr = safeParse(localStorage.getItem("attempts")) || [];
-          const idx = arr.findIndex(a => String(a.id) === String(id));
+          const arr = safeParse(localStorage.getItem(STORAGE_KEY)) || [];
+          const idx = arr.findIndex(a => String(a.id) === String(id) || String(a._uid) === String(id));
           if (idx >= 0) {
             arr[idx] = Object.assign({}, arr[idx], patch);
             saveLocalAttempts(arr);
@@ -74,7 +77,7 @@
           return await res.json();
         } catch (e) {
           console.warn("attemptsAPI.saveAttempt fallback", e);
-          const arr = safeParse(localStorage.getItem("attempts")) || [];
+          const arr = safeParse(localStorage.getItem(STORAGE_KEY)) || [];
           arr.push(attempt);
           saveLocalAttempts(arr);
           return attempt;
@@ -88,8 +91,8 @@
           return await res.json();
         } catch (e) {
           console.warn("attemptsAPI.deleteAttempt fallback", e);
-          const arr = safeParse(localStorage.getItem("attempts")) || [];
-          const filtered = arr.filter(a => String(a.id) !== String(id));
+          const arr = safeParse(localStorage.getItem(STORAGE_KEY)) || [];
+          const filtered = arr.filter(a => String(a.id) !== String(id) && String(a._uid) !== String(id));
           saveLocalAttempts(filtered);
           return { success: true };
         }
