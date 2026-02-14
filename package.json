@@ -1,14 +1,9 @@
 {
-  "name": "attempts-saver",
-  "version": "2.0.0",
-  "description": "Geometry Dash Attempts Saver - Save your Geometry Dash Attempts",
-  "scripts": {
-    "start": "npx serve . -s -l 3000",
-    "dev": "netlify dev",
-    "predeploy": "echo \"No build step required for static site\"",
-    "deploy": "echo \"Deploy handled by Netlify from repo\""
-  },
-  "author": "",
-  "license": "MIT",
-  "devDependencies": {}
+  "private": true,
+  "license": "SEE LICENSE IN LICENSE",
+  "author": "The Block Times LLC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theblocktimesllc/attempts-saver.git"
+  }
 }
