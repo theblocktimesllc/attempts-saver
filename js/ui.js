@@ -1,7 +1,7 @@
 // ui.js
 // UI bindings and orchestration for actions (save, update, delete, export, import, filters)
 
-import { loadAttempts, saveAttempts, sanitizeImportedAttempts, exportAttemptsToJsonString } from "./storage.js";
+import { loadAttempts, saveAttempts, sanitizeImportedAttempts, exportAttemptsToJsonString, mergeAndSaveAttempts } from "./storage.js";
 import { generateUid, parseDateFlexible, formatDateForDisplay, toNumberSafe, normalizeStringForSearch } from "./utils.js";
 import { notify, confirmAsync } from "./notifications.js";
 import { validateAllFields, buildFieldConfig, attachClearOnInput, attachNumericInputHandlers } from "./validation.js";
@@ -51,7 +51,7 @@ export function initUI(dom) {
 
     dom.levelNameEl.value = item.name || "";
     dom.levelIdEl.value = item.id || "";
-    dom.idTypeEl.value = item.type || "online";
+    if (dom.idTypeEl) dom.idTypeEl.value = item.type || "online";
     dom.dateEl.value = item.date || "";
     dom.attemptsEl.value = String(item.attempts || "");
     dom.notesEl.value = item.notes || "";
@@ -144,7 +144,7 @@ export function initUI(dom) {
     });
   }
 
-  // Robust filtering using safe parsing and normalization
+  // Filters: uses Apply Filters button to trigger rendering.
   function applyFilters(list) {
     let out = Array.isArray(list) ? [...list] : [];
 
@@ -201,6 +201,17 @@ export function initUI(dom) {
       if (dom.filterMaxAttemptsEl) dom.filterMaxAttemptsEl.value = "";
       if (dom.filterDateFromEl) dom.filterDateFromEl.value = "";
       if (dom.filterDateToEl) dom.filterDateToEl.value = "";
+      // Clear search as well to show full list
+      if (dom.searchInputEl) dom.searchInputEl.value = "";
+      // After clearing, render full list
+      renderCurrentTable();
+      safeRestoreFocus();
+    });
+  }
+
+  // Apply Filters button: user must click to apply filters and search
+  if (dom.applyFiltersBtn) {
+    dom.applyFiltersBtn.addEventListener("click", () => {
       renderCurrentTable();
       safeRestoreFocus();
     });
@@ -275,25 +286,11 @@ export function initUI(dom) {
             notify("Imported file must be an array of attempts.");
             return;
           }
-          const imported = sanitizeImportedAttempts(parsed);
-
-          // Merge existing attemptsList with imported, dedupe by id if present, else by _uid
-          const map = new Map();
-          // keep existing first
-          attemptsList.forEach(item => {
-            const key = (item && item.id) ? String(item.id) : (item && item._uid) ? String(item._uid) : generateUid();
-            map.set(key, item);
-          });
-          // imported items override existing items with same id/_uid
-          imported.forEach(item => {
-            const key = (item && item.id) ? String(item.id) : (item && item._uid) ? String(item._uid) : generateUid();
-            map.set(key, item);
-          });
-
-          attemptsList = Array.from(map.values());
-          saveAttempts(attemptsList);
+          // Use merge helper to avoid accidental replacement
+          const merged = mergeAndSaveAttempts(parsed, { preferExisting: false });
+          attemptsList = merged;
           renderCurrentTable();
-          notify(`Import successful. ${imported.length} items merged.`);
+          notify(`Import successful. ${Array.isArray(parsed) ? parsed.length : 0} items processed.`);
         } catch (err) {
           console.error("Import error:", err);
           notify("Failed to import file. Make sure it's valid JSON.");
@@ -358,18 +355,20 @@ export function initUI(dom) {
   function renderCurrentTable() {
     let list = Array.isArray(attemptsList) ? [...attemptsList] : [];
 
-    // Normalized search across name, notes and id
+    // Search: only exact match against the level name (normalized)
     const qRaw = dom.searchInputEl && dom.searchInputEl.value ? dom.searchInputEl.value : "";
     const q = normalizeStringForSearch(qRaw);
     if (q) {
       list = list.filter(i => {
-        const haystack = `${i.name || ""} ${i.notes || ""} ${i.id || ""}`;
-        return normalizeStringForSearch(haystack).includes(q);
+        const nameNorm = normalizeStringForSearch(i.name || "");
+        return nameNorm === q;
       });
     }
 
+    // Apply filters (only when user clicked Apply Filters)
     list = applyFilters(list);
 
+    // Sorting
     if (sortState.column) {
       list.sort((a, b) => {
         let x = a[sortState.column];
@@ -400,11 +399,14 @@ export function initUI(dom) {
     });
   }
 
+  // Keep search input free; rendering happens when user clicks Apply Filters.
+  // If you want Enter to trigger apply, you can add a key handler here.
   if (dom.searchInputEl) {
-    let t = null;
-    dom.searchInputEl.addEventListener("input", () => {
-      clearTimeout(t);
-      t = setTimeout(() => renderCurrentTable(), 180);
+    dom.searchInputEl.addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter") {
+        ev.preventDefault();
+        renderCurrentTable();
+      }
     });
   }
 

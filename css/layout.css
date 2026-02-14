@@ -1,0 +1,57 @@
+/* layout.css
+   Page layout, header, panels, wrappers and responsive layout rules
+*/
+
+.app-header {
+  text-align: center;
+  margin: 18px 0;
+}
+
+.theme-toggle {
+  display: flex;
+  justify-content: flex-end;
+}
+
+#toggle-theme {
+  padding: 8px 14px;
+  background: var(--input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  cursor: pointer;
+  transition: var(--transition);
+}
+#toggle-theme:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Panels */
+.form-container,
+.saved-container {
+  background: var(--panel);
+  padding: 22px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  transition: var(--transition);
+}
+
+/* Table wrapper and responsive overflow */
+.table-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+  touch-action: pan-x;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  #logo { width: 90px; }
+  .form-container, .saved-container { padding: 16px; }
+  .filters input, .filters select { max-width: 100%; flex: 1 1 100%; }
+}
+
+@media (max-width: 480px) {
+  table { min-width: 560px; font-size: 13px; }
+}
