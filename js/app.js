@@ -15,7 +15,7 @@ const dom = {
   updateBtn: document.getElementById("update"),
   cancelEditBtn: document.getElementById("cancel-edit"),
 
-  tableBody: document.querySelector("#table tbody"),
+  tableBody: document.getElementById("table-body"),
   searchInputEl: document.getElementById("search"),
 
   exportJsonBtn: document.getElementById("export-json"),
@@ -30,6 +30,7 @@ const dom = {
   filterDateFromEl: document.getElementById("filter-date-from"),
   filterDateToEl: document.getElementById("filter-date-to"),
   clearFiltersBtn: document.getElementById("clear-filters"),
+  applyFiltersBtn: document.getElementById("apply-filters"),
 
   statTotalEl: document.getElementById("stat-total"),
   statAttemptsEl: document.getElementById("stat-attempts"),

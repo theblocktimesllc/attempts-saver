@@ -1,0 +1,54 @@
+/* theme.css
+   Light theme overrides and light-mode tweaks
+*/
+
+body.light {
+  --bg: #f4f4f7;
+  --panel: #ffffff;
+  --input: #f0f0f5;
+  --text: #1a1a1a;
+  --muted: #555;
+  --border: #d0d0d0;
+  --shadow: 0 0 12px rgba(0,0,0,0.15);
+}
+
+/* Light mode specific component overrides */
+body.light .backup-controls button,
+body.light #toggle-theme,
+body.light .edit,
+body.light .borrar {
+  background: #e6e6e9;
+  color: #000;
+  border-color: #c8c8c8;
+}
+body.light .backup-controls button:hover,
+body.light #toggle-theme:hover,
+body.light .edit:hover,
+body.light .borrar:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+body.light .stats-panel {
+  background: #e6e6e9;
+  color: #000;
+  border-color: #c8c8c8;
+}
+
+body.light tbody tr:hover { background: #e6e6e9; }
+body.light thead { background: #dcdce0; }
+body.light thead th { color: #000; }
+
+body.light input,
+body.light select,
+body.light textarea {
+  background: #f7f7fa;
+  color: #000;
+  border-color: #c8c8c8;
+}
+body.light input::placeholder,
+body.light textarea::placeholder { color: #777; }
+
+body.light #save { background: var(--accent); color: #fff; }
+body.light #update { background: #ffb84d; color: #000; }
+body.light #cancel-edit { background: #ff6b6b; color: #fff; }

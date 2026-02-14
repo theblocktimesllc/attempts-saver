@@ -1,5 +1,5 @@
 // storage.js
-// Local storage helpers (English-only identifiers)
+// Local storage helpers (English-only identifiers) with merge helper
 
 const STORAGE_KEY = "attempts_saver_data";
 
@@ -12,7 +12,7 @@ function _generateUid() {
 
 /**
  * Sanitize imported array and ensure each item has required fields.
- * Accepts legacy Spanish keys (nombre, fecha, tipo, notas) and maps them to English. 
+ * Accepts legacy Spanish keys (nombre, fecha, tipo, notas) and maps them to English.
  */
 export function sanitizeImportedAttempts(rawArray) {
   try {
@@ -74,6 +74,58 @@ export function saveAttempts(list) {
   } catch (err) {
     console.error("storage.saveAttempts error:", err);
     return false;
+  }
+}
+
+/**
+ * Merge an imported array of attempts with existing stored attempts, deduplicate and save.
+ *
+ * Behavior:
+ * - importedArray is sanitized first.
+ * - deduplication key: prefer `id` if present, otherwise `_uid`.
+ * - imported items override existing items with the same key by default.
+ * - returns the merged array (and persists it).
+ *
+ * Options:
+ * - preferExisting (boolean): if true, keep existing items on conflict instead of imported ones.
+ */
+export function mergeAndSaveAttempts(importedArray, options = { preferExisting: false }) {
+  try {
+    const imported = sanitizeImportedAttempts(importedArray || []);
+    const existing = loadAttempts() || [];
+
+    const map = new Map();
+
+    // Helper to compute key
+    const keyFor = item => {
+      if (!item) return _generateUid();
+      if (item.id && String(item.id).trim() !== "") return String(item.id);
+      if (item._uid && String(item._uid).trim() !== "") return String(item._uid);
+      return _generateUid();
+    };
+
+    // Insert existing first
+    existing.forEach(item => {
+      const key = keyFor(item);
+      map.set(key, item);
+    });
+
+    // Merge imported: either override or skip based on options.preferExisting
+    imported.forEach(item => {
+      const key = keyFor(item);
+      if (options.preferExisting) {
+        if (!map.has(key)) map.set(key, item);
+      } else {
+        map.set(key, item);
+      }
+    });
+
+    const merged = Array.from(map.values());
+    saveAttempts(merged);
+    return merged;
+  } catch (err) {
+    console.error("storage.mergeAndSaveAttempts error:", err);
+    return loadAttempts();
   }
 }
 

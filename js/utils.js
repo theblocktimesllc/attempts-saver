@@ -1,5 +1,5 @@
 // utils.js
-// Utility functions (dates, uid, escape)
+// Utility functions (dates, uid, escape, safe parsing and normalization)
 
 export const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 
@@ -44,4 +44,21 @@ export function escapeHtml(s = "") {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
+}
+
+// Safe number parsing that distinguishes empty from invalid
+export function toNumberSafe(v) {
+  if (v === null || v === undefined || v === "") return null;
+  const n = Number(String(v).trim());
+  return Number.isFinite(n) ? n : null;
+}
+
+// Normalize strings for search: lowercase, remove diacritics, trim
+export function normalizeStringForSearch(s = "") {
+  if (s === null || s === undefined) return "";
+  return String(s)
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
 }
