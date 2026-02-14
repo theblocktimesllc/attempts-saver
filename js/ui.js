@@ -1,5 +1,6 @@
 // ui.js
 // UI bindings and orchestration for actions (save, update, delete, export, import, filters)
+// Updated: preserve scroll and refine focus to avoid jumping to top on actions
 
 import { loadAttempts, saveAttempts, sanitizeImportedAttempts, exportAttemptsToJsonString, mergeAndSaveAttempts } from "./storage.js";
 import { generateUid, parseDateFlexible, formatDateForDisplay, toNumberSafe, normalizeStringForSearch } from "./utils.js";
@@ -89,7 +90,7 @@ export function initUI(dom) {
       saveAttempts(attemptsList);
       resetFormUI();
       renderCurrentTable();
-      safeRestoreFocus();
+      safeRestoreFocus(); // keep focusing name input after save
       notify("Saved.");
     });
   }
@@ -132,7 +133,7 @@ export function initUI(dom) {
       saveAttempts(attemptsList);
       resetFormUI();
       renderCurrentTable();
-      safeRestoreFocus();
+      safeRestoreFocus(); // keep focusing name input after update
       notify("Updated.");
     });
   }
@@ -142,6 +143,28 @@ export function initUI(dom) {
       resetFormUI();
       safeRestoreFocus();
     });
+  }
+
+  /**
+   * Helper: preserve scroll position while running a render or DOM update function.
+   * Uses requestAnimationFrame to restore after paint.
+   */
+  function preserveScroll(fn) {
+    try {
+      const scEl = document.scrollingElement || document.documentElement || document.body;
+      const prev = scEl ? scEl.scrollTop : window.scrollY || 0;
+      fn();
+      requestAnimationFrame(() => {
+        try {
+          if (scEl) scEl.scrollTop = prev;
+          else window.scrollTo(0, prev);
+        } catch (e) {
+          // ignore
+        }
+      });
+    } catch (err) {
+      try { fn(); } catch (e) {}
+    }
   }
 
   // Filters: uses Apply Filters button to trigger rendering.
@@ -203,17 +226,22 @@ export function initUI(dom) {
       if (dom.filterDateToEl) dom.filterDateToEl.value = "";
       // Clear search as well to show full list
       if (dom.searchInputEl) dom.searchInputEl.value = "";
-      // After clearing, render full list
-      renderCurrentTable();
-      safeRestoreFocus();
+      // Render without jumping; keep focus sensible (apply button if present)
+      preserveScroll(() => renderCurrentTable());
+      try {
+        if (dom.applyFiltersBtn) dom.applyFiltersBtn.focus();
+      } catch (e) {}
     });
   }
 
   // Apply Filters button: user must click to apply filters and search
   if (dom.applyFiltersBtn) {
     dom.applyFiltersBtn.addEventListener("click", () => {
-      renderCurrentTable();
-      safeRestoreFocus();
+      preserveScroll(() => renderCurrentTable());
+      try {
+        // keep focus on apply button so keyboard users remain in control
+        dom.applyFiltersBtn.focus();
+      } catch (e) {}
     });
   }
 
@@ -224,8 +252,7 @@ export function initUI(dom) {
       if (!col) return;
       if (sortState.column === col) sortState.direction *= -1;
       else { sortState.column = col; sortState.direction = 1; }
-      renderCurrentTable();
-      safeRestoreFocus();
+      preserveScroll(() => renderCurrentTable());
     });
   });
 
@@ -289,14 +316,13 @@ export function initUI(dom) {
           // Use merge helper to avoid accidental replacement
           const merged = mergeAndSaveAttempts(parsed, { preferExisting: false });
           attemptsList = merged;
-          renderCurrentTable();
+          preserveScroll(() => renderCurrentTable());
           notify(`Import successful. ${Array.isArray(parsed) ? parsed.length : 0} items processed.`);
         } catch (err) {
           console.error("Import error:", err);
           notify("Failed to import file. Make sure it's valid JSON.");
         } finally {
           dom.importFileInput.value = "";
-          safeRestoreFocus();
         }
       };
       reader.readAsText(file);
@@ -316,6 +342,11 @@ export function initUI(dom) {
   }
 
   if (dom.tableBody) {
+    // ensure tableBody is focusable for targeted focus after actions
+    try {
+      if (!dom.tableBody.hasAttribute("tabindex")) dom.tableBody.setAttribute("tabindex", "-1");
+    } catch (e) {}
+
     dom.tableBody.addEventListener("click", async (ev) => {
       const btn = ev.target.closest("button");
       if (!btn) return;
@@ -328,11 +359,12 @@ export function initUI(dom) {
         enterEditModeByIndex(idx);
       } else if (btn.classList.contains("borrar")) {
         const confirmed = await confirmAsync(`Delete "${attemptsList[idx].name}"?`);
-        if (!confirmed) { safeRestoreFocus(); return; }
+        if (!confirmed) { return; }
         attemptsList.splice(idx, 1);
         saveAttempts(attemptsList);
-        renderCurrentTable();
-        safeRestoreFocus();
+        // render without jumping and keep focus on table body
+        preserveScroll(() => renderCurrentTable());
+        try { dom.tableBody.focus(); } catch (e) {}
         notify("Deleted.");
       }
     });
@@ -397,15 +429,18 @@ export function initUI(dom) {
       tableBody: dom.tableBody,
       sortState
     });
+
+    // update stats if render module exposes helper
+    try { updateStats(list, { totalEl: dom.statTotalEl, attemptsEl: dom.statAttemptsEl, averageEl: dom.statAverageEl }); } catch (e) {}
   }
 
   // Keep search input free; rendering happens when user clicks Apply Filters.
-  // If you want Enter to trigger apply, you can add a key handler here.
+  // Enter triggers apply (preserve scroll)
   if (dom.searchInputEl) {
     dom.searchInputEl.addEventListener("keydown", (ev) => {
       if (ev.key === "Enter") {
         ev.preventDefault();
-        renderCurrentTable();
+        preserveScroll(() => renderCurrentTable());
       }
     });
   }
