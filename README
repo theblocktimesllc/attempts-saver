@@ -1,0 +1,80 @@
+# Attempts Saver  
+
+A desktop application for tracking and organizing Geometry Dash attempts  
+Developed by Axionyx Group
+
+Attempts Saver is a desktop tool designed to record, organize, and analyze your Geometry Dash attempts.  
+It provides a clean, modern interface focused on clarity, speed, and ease of use.
+
+---
+
+## Features
+
+- Fast attempt registration  
+- Editing of existing entries  
+- Advanced filtering by type, date, and status  
+- Automatic statistics (totals, averages, and more)  
+- Export options including JSON, CSV, and TXT  
+- Light and dark themes  
+- Compact and optimized interface  
+- Custom application icon and professional Electron build  
+- Local automatic data storage  
+
+---
+
+## Installation
+
+1. Download the installer from the `dist` folder (or from the official download page if applicable).  
+2. Run `Attempts Saver Setup.exe`.  
+3. Follow the installation steps.  
+4. Launch the application from the Start Menu or desktop shortcut.
+
+No internet connection or Node.js installation is required.
+
+---
+
+## Project Structure
+
+/assets
+   icon.ico
+index.html
+main.js
+renderer.js (if applicable)
+style.css
+package.json
+LICENSE
+
+## Development
+
+To run the application in development mode:
+
+npm install
+npm start
+
+To build a production-ready installer:
+
+npm run build
+
+The installer and portable executable will be generated inside the `dist` directory.
+
+---
+
+## Technologies Used
+
+- Electron  
+- HTML, CSS, and JavaScript  
+- Node.js  
+- Electron Builder for packaging  
+
+## License
+
+Attempts Saver is licensed under the Creative Commons  
+Attribution-NonCommercial-NoDerivatives 4.0 International License (CC BY-NC-ND 4.0).
+
+This license prohibits commercial use, modification, redistribution of modified versions, and rebranding.  
+See the `LICENSE` file for full details.
+
+## Author
+
+Axionyx Group  
+2026

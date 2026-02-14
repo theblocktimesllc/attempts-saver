@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Geometry Dash Attempts Saver</title>
+  <link rel="stylesheet" href="./css/main.css">
+</head>
+<body>
+
+  <img src="./assets/logo.png" id="logo" alt="Geometry Dash Attempts Saver logo">
+  <h1>Geometry Dash Attempts Saver</h1>
+
+  <div class="container">
+
+    <!-- THEME TOGGLE -->
+    <div class="theme-toggle">
+      <button id="toggle-theme" type="button" aria-pressed="false">Toggle theme</button>
+    </div>
+
+    <!-- FORM -->
+    <div class="form-container">
+
+      <label for="level-name">Level name</label>
+      <input type="text" id="level-name" name="level-name" placeholder="E.g: Nine Circles" autocomplete="off">
+
+      <label for="level-id">Level ID</label>
+      <input type="text" id="level-id" name="level-id" placeholder="E.g: 12345678" inputmode="numeric" autocomplete="off">
+
+      <label for="id-type">ID type</label>
+      <select id="id-type" name="id-type" aria-label="ID type">
+        <option value="online">Online ID</option>
+        <option value="local">Local ID</option>
+      </select>
+
+      <p class="info-link">
+        <a href="https://the-block-times.com/axionyx-group/online-local-id/" target="_blank" rel="noopener noreferrer">
+          Differences between Online ID and Local ID?
+        </a>
+      </p>
+
+      <label for="date">Date</label>
+      <input type="text" id="date" name="date" placeholder="mm/dd/yyyy" autocomplete="off">
+
+      <label for="attempts">Attempts</label>
+      <input type="text" id="attempts" name="attempts" placeholder="E.g: 532" inputmode="numeric" autocomplete="off">
+
+      <label for="notes">Notes (optional)</label>
+      <textarea id="notes" name="notes" placeholder="Additional notes..."></textarea>
+
+      <button id="save" type="button">Save attempt</button>
+      <button id="update" type="button" hidden>Update attempt</button>
+      <button id="cancel-edit" type="button" hidden>Cancel edit</button>
+    </div>
+
+    <!-- SAVED ATTEMPTS -->
+    <div class="saved-container">
+      <h2>Saved attempts</h2>
+
+      <!-- SEARCH -->
+      <label for="search" class="visually-hidden">Search attempts</label>
+      <input type="text" id="search" class="buscar" name="search" placeholder="Search by name..." autocomplete="off">
+
+      <!-- ADVANCED FILTERS -->
+      <div class="filters">
+        <label for="filter-type" class="visually-hidden">Filter by type</label>
+        <select id="filter-type" name="filter-type" aria-label="Filter by type">
+          <option value="all">All types</option>
+          <option value="online">Online ID</option>
+          <option value="local">Local ID</option>
+        </select>
+
+        <label for="filter-min-attempts" class="visually-hidden">Minimum attempts</label>
+        <input type="number" id="filter-min-attempts" name="filter-min-attempts" placeholder="Min attempts" min="0">
+
+        <label for="filter-max-attempts" class="visually-hidden">Maximum attempts</label>
+        <input type="number" id="filter-max-attempts" name="filter-max-attempts" placeholder="Max attempts" min="0">
+
+        <label for="filter-date-from" class="visually-hidden">Date from</label>
+        <input type="text" id="filter-date-from" name="filter-date-from" placeholder="From date (mm/dd/yyyy)">
+
+        <label for="filter-date-to" class="visually-hidden">Date to</label>
+        <input type="text" id="filter-date-to" name="filter-date-to" placeholder="To date (mm/dd/yyyy)">
+
+        <button id="clear-filters" type="button">Clear filters</button>
+      </div>
+
+      <!-- EXPORT / IMPORT -->
+      <div class="backup-controls">
+        <button id="export-json" type="button">Export JSON</button>
+        <button id="export-csv" type="button">Export CSV</button>
+        <button id="export-txt" type="button">Export TXT</button>
+        <button id="import-btn" type="button">Import data</button>
+        <input type="file" id="import-file" name="import-file" accept="application/json" hidden>
+      </div>
+
+      <!-- STATISTICS -->
+      <div class="stats-panel" role="region" aria-label="Statistics">
+        <p>Total levels: <span id="stat-total">0</span></p>
+        <p>Total attempts: <span id="stat-attempts">0</span></p>
+        <p>Average attempts: <span id="stat-average">0</span></p>
+      </div>
+
+      <!-- TABLE -->
+      <div class="table-wrapper" role="region" aria-label="Saved attempts table">
+        <table id="table">
+          <thead>
+            <tr>
+              <th data-col="name" class="sortable" scope="col">Name</th>
+              <th data-col="id" class="sortable" scope="col">ID</th>
+              <th scope="col">Type</th>
+              <th data-col="date" class="sortable" scope="col">Date</th>
+              <th data-col="attempts" class="sortable" scope="col">Attempts</th>
+              <th scope="col">Notes</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>

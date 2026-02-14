@@ -1,0 +1,42 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.
+
+[1.0.1] – 2026-01-15
+
+Fixed:
+
+- Resolved a critical issue where input fields became unresponsive after deleting an attempt.
+- Replaced blocking dialogs (alert / confirm) with non-blocking UI components to prevent Electron focus freeze.
+- Implemented safe DOM updates to avoid focus loss after table re-rendering.
+- Added robust focus restoration logic to ensure the form remains usable after any action.
+Changed
+- Improved internal UI state handling for smoother interactions.
+- Enhanced table rendering logic to avoid destructive DOM operations.
+
+[1.0.0] – 2026-01-15
+
+Added:
+
+- Initial public release of Attempts Saver.
+- Attempt registration system.
+- Editing functionality for existing entries.
+- Filtering by type, date, and status.
+- Automatic statistics (totals, averages).
+- Export options: JSON, CSV, and TXT.
+- Light and dark theme support.
+- Compact and optimized user interface.
+- Custom application icon.
+- Electron-based desktop build with installer.
+- Local automatic data storage.
+- Strict non-commercial, no-derivatives license (CC BY-NC-ND 4.0).
+
+Fixed:
+
+- Prevented DevTools from opening automatically on startup.
+- Improved layout consistency across themes.
+- Corrected table alignment and spacing issues.
+Changed
+- Updated branding and author information.
+- Reorganized project structure for clarity and maintainability.
