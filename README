@@ -1,80 +1,127 @@
-# Attempts Saver  
-
-A desktop application for tracking and organizing Geometry Dash attempts  
-Developed by Axionyx Group
-
-Attempts Saver is a desktop tool designed to record, organize, and analyze your Geometry Dash attempts.  
-It provides a clean, modern interface focused on clarity, speed, and ease of use.
+# Attempts Saver — README
 
 ---
 
-## Features
+## Overview
 
-- Fast attempt registration  
-- Editing of existing entries  
-- Advanced filtering by type, date, and status  
-- Automatic statistics (totals, averages, and more)  
-- Export options including JSON, CSV, and TXT  
-- Light and dark themes  
-- Compact and optimized interface  
-- Custom application icon and professional Electron build  
-- Local automatic data storage  
+**Attempts Saver** is a responsive web application designed for **Geometry Dash** players to efficiently record, analyze, and understand their gameplay attempts. The application runs entirely in the browser, offering a streamlined, keyboard-friendly experience with fast performance and cross-device accessibility.
+
+**Publisher:** The Block Times LLC
+**Developer:** Axionyx Group
 
 ---
 
-## Installation
+## Release Information
 
-1. Download the installer from the `dist` folder (or from the official download page if applicable).  
-2. Run `Attempts Saver Setup.exe`.  
-3. Follow the installation steps.  
-4. Launch the application from the Start Menu or desktop shortcut.
-
-No internet connection or Node.js installation is required.
+| Version | Release   | Web Application URL                                                      | Desktop Status          | Notes                                                               |
+| ------- | --------- | ------------------------------------------------------------------------ | ----------------------- | ------------------------------------------------------------------- |
+| v2.0.0  | WEB 2.0.0 | [https://attempts-saver.netlify.app](https://attempts-saver.netlify.app) | Desktop: v1.0.1 (final) | Desktop version does not include v2.0.0 features, updates, or fixes |
 
 ---
 
-## Project Structure
+## What’s New in v2.0.0
 
-/assets
-   icon.ico
-index.html
-main.js
-renderer.js (if applicable)
-style.css
-package.json
-LICENSE
-
-## Development
-
-To run the application in development mode:
-
-npm install
-npm start
-
-To build a production-ready installer:
-
-npm run build
-
-The installer and portable executable will be generated inside the `dist` directory.
+* Official **web-based distribution** by Axionyx Group under The Block Times LLC
+* Support for modern browsers: **Chrome, Edge, Firefox, and Safari** (latest two major versions)
+* **Instant updates** delivered without requiring installation or manual upgrades
 
 ---
 
-## Technologies Used
+## Core Features
 
-- Electron  
-- HTML, CSS, and JavaScript  
-- Node.js  
-- Electron Builder for packaging  
+### Attempt Logging
 
-## License
+* Record attempts with structured fields including **type, date, difficulty, and notes**
+* Utilize **quick actions** for rapid input during gameplay
 
-Attempts Saver is licensed under the Creative Commons  
-Attribution-NonCommercial-NoDerivatives 4.0 International License (CC BY-NC-ND 4.0).
+### Progress Analytics
 
-This license prohibits commercial use, modification, redistribution of modified versions, and rebranding.  
-See the `LICENSE` file for full details.
+* View **totals and averages** across sessions and difficulty levels
+* Analyze performance trends with **visual charts over time**
 
-## Author
+### Filtering and Organization
 
-Axionyx Group  
-2026
+* Apply **advanced filters** by type, date range, difficulty, and custom tags
+* Use **sorting and saved views** for efficient, repeatable analysis
+
+### Data Portability
+
+* Export data in **JSON, TXT, and CSV formats** for backup or transfer
+* Import supported formats to **restore or migrate data across devices**
+
+### Interface and Performance
+
+* Clean, distraction-free interface optimized for **focus and accessibility**
+* Lightweight architecture ensuring **fast load times and responsiveness**
+
+---
+
+## Getting Started
+
+1. Open the web application in a supported browser:
+   [https://attempts-saver.netlify.app](https://attempts-saver.netlify.app)
+2. Record attempts in real time using quick input actions
+3. Review your progress with filters and analytics tools
+4. Export your data regularly via **Export (CSV, TXT, JSON)** for backup
+5. Use **Import** to restore or transfer your data when needed
+
+**Note:** An active internet connection is required. Regular data export is strongly recommended for backup purposes.
+
+---
+
+## Migration from Desktop Version
+
+* The desktop application remains at **v1.0.1** and is no longer updated
+* To migrate:
+
+  1. Export your data from the desktop version (JSON or CSV)
+  2. Import the file into the web application using the **Import** feature
+
+---
+
+## Legal and Compliance
+
+**End User License Agreement (EULA)**
+[https://the-block-times.com/axionyx-group/legal/EULA](https://the-block-times.com/axionyx-group/legal/EULA)
+
+**Terms of Use**
+[https://the-block-times.com/axionyx-group/legal/terms](https://the-block-times.com/axionyx-group/legal/terms)
+
+**Privacy Notice**
+[https://the-block-times.com/axionyx-group/legal/privacy](https://the-block-times.com/axionyx-group/legal/privacy)
+
+---
+
+## Source Code and Support
+
+**GitHub Repository**
+[https://github.com/theblocktimesllc/attempts-saver](https://github.com/theblocktimesllc/attempts-saver)
+
+**Feedback**
+[https://the-block-times.com/feedback](https://the-block-times.com/feedback)
+
+**Support**
+[https://the-block-times.com/support](https://the-block-times.com/support)
+
+---
+
+## Testimonials
+
+> “Attempts Saver finally gave me a clear view of my progress. I didn’t realize how much data I was missing.”
+> — Geometry Dash Player
+> “Clean, fast, and genuinely useful. This is exactly the kind of tool the community needed.”
+> — Creator & Developer
+
+---
+
+## Contributing
+
+Contributions, issue reports, and feature requests are welcome via the GitHub repository.
+
+---
+
+## License and Attribution
+
+© The Block Times LLC — Attempts Saver v2.0.0
+
+By using Attempts Saver, you agree to the applicable EULA, Terms of Use, and Privacy Notice linked above.

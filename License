@@ -1,180 +1,173 @@
-### End‑User License Agreement
+# Attempts Saver — Non-Commercial Share-Alike License v1.0 (ANCSA-1.0)
 
-**The Block Times LLC — End‑User License Agreement (EULA)**  
-**License Terms Governing Use of All The Block Times LLC Software Deliverables**
-
----
-
-## Introduction
-
-This End‑User License Agreement (“**Agreement**” or “**EULA**”) is a legally binding agreement between **The Block Times LLC** (“**we**”, “**us**”, “**our**”) and any individual or entity (“**you**”, “**your**”, “**Licensee**”) that installs, accesses, or uses any software, executable, script, configuration, documentation, or digital deliverable (collectively, the “**Software**”) provided by The Block Times LLC, including products and services operated under Axionyx Group and Attempts Saver.
-
-By installing, copying, accessing, or using the Software, you acknowledge that you have read, understood, and agree to be bound by this EULA. If you do not agree to these terms, you must not install, access, or use the Software.
-
-This EULA operates together with The Block Times Universal Terms of Service and Global Privacy Policy. In the event of any conflict, the most restrictive provision regarding Software use shall apply.
+**Copyright © The Block Times LLC. All rights reserved except as expressly granted below.**
 
 ---
 
-## Definitions
+## 1. Definitions
 
-**Software** means the object code, source code (if provided), executables, scripts, configuration files, documentation, media, and other digital assets delivered by The Block Times LLC.
-
-**Licensee** means the individual or legal entity that receives the Software and accepts this EULA.
-
-**Authorized Use** means the specific uses, environments, and scope expressly permitted by this EULA or by a separate written agreement between the parties.
-
-**Third‑Party Components** means libraries, frameworks, runtimes, or services included with or required by the Software that are subject to separate license terms.
+* **“Software”** — The Attempts Saver project, including source code, binaries, assets, and documentation.
+* **“Original Work”** — The Software as distributed by The Block Times LLC.
+* **“Derivative Work”** — Any modified version of the Software.
+* **“Distribution”** — Making the Software available to any third party (publicly or privately).
+* **“Non-Commercial”** — Use that does not directly or indirectly generate revenue, profit, or commercial advantage.
 
 ---
 
-## License Grant
+## 2. License Grant
 
-**Limited License**  
-Subject to full payment of any applicable fees and your continued compliance with this EULA, The Block Times LLC grants you a **limited**, **non‑exclusive**, **non‑transferable**, **non‑sublicensable**, and **revocable** license to use the Software solely as follows:
+You are granted a **limited, worldwide, non-exclusive, non-transferable license** to:
 
-- **Internal Use**: For the internal business operations of the Licensee, unless a different scope is expressly set forth in a written agreement or service tier.  
-- **Documented Environments**: Only within the operating systems, platforms, and environments explicitly documented for the Software (for example, specific desktop OS versions, browser versions, or server environments).  
-- **Scope and Limitations**: In accordance with any additional scope, limitations, or usage conditions agreed in writing or specified by your selected service tier.
+* Use the Software for **personal, educational, and non-commercial purposes**
+* Copy and redistribute the Software
+* Modify the Software and create Derivative Works
 
-No rights are granted other than those expressly set forth in this EULA. Any rights not expressly granted are reserved by The Block Times LLC.
-
----
-
-## License Types and Service Tiers
-
-Unless otherwise agreed in writing, the following default license types apply:
-
-- **Basic Tier** — License for personal or internal evaluation use only. Redistribution, resale, or commercial deployment is prohibited.  
-- **Standard Tier** — License for internal commercial use within the Licensee’s organization. Redistribution and sublicensing are prohibited.  
-- **Enterprise Tier** — License for internal commercial use with extended rights as expressly documented, which may include access to source code only where explicitly provided in writing.  
-- **Custom Commercial License** — Any rights beyond internal use (including resale, sublicensing, or public distribution) require a separate written agreement signed by an authorized representative of The Block Times LLC.
+All rights are subject to the conditions below.
 
 ---
 
-## Ownership and Intellectual Property
+## 3. Mandatory Conditions
 
-The Software is **licensed, not sold**. All right, title, and interest in and to the Software, including source code, object code, designs, documentation, trademarks, trade secrets, and other intellectual property, remain the exclusive property of The Block Times LLC and its licensors, except where expressly transferred in a written agreement.
+### 3.1 Non-Commercial Restriction
 
-You shall not claim any ownership in the Software. Any suggestions, enhancements, or feedback you provide may be used by The Block Times LLC without obligation to you.
+You may **not**, under any circumstances:
 
----
-
-## Permitted Use
-
-You may use the Software only:
-
-- In the environments and for the purposes expressly permitted by this EULA or a separate written agreement.  
-- For the internal operational needs of your organization consistent with your service tier.  
-- In compliance with all applicable laws and regulations.
-
-Any use outside the documented scope or environments is prohibited and may void warranties and support obligations.
+* Sell the Software or any Derivative Work
+* Charge for access, hosting, or usage
+* Include the Software in a paid product or service
+* Use the Software in any activity that generates revenue or commercial advantage
 
 ---
 
-## Restrictions
+### 3.2 Share-Alike Requirement
 
-Unless expressly permitted in writing by The Block Times LLC, you shall not:
+If you Distribute the Software or any Derivative Work:
 
-- **Modify** the Software, create derivative works, or alter any portion of the Software.  
-- **Reverse engineer**, decompile, disassemble, or attempt to derive the source code of the Software.  
-- **Distribute**, sell, sublicense, lease, rent, transfer, or otherwise make the Software available to third parties.  
-- **Remove, alter, or obscure** any proprietary notices, labels, copyright, or attribution statements.  
-- **Use the Software** in any environment not explicitly documented or authorized.  
-- **Circumvent** any technical protection measures or licensing controls.  
-- **Use the Software** to develop a competing product or service.
-
-Any unauthorized use constitutes a material breach of this EULA and may subject you to injunctive relief, damages, and other remedies.
+* You **must license it under ANCSA-1.0 only**
+* You **may not apply additional legal or technical restrictions**
+* You **must include this license in full**
 
 ---
 
-## Attribution Requirements
+### 3.3 Attribution Requirement
 
-Where distribution or publication of the Software or portions thereof is expressly permitted by a separate written agreement, you must include a visible attribution in any authorized distribution: **“© The Block Times LLC. Used with permission.”** Additional attribution requirements may be specified in the applicable written license.
+All distributions must include visible attribution:
 
----
+> “Attempts Saver — © The Block Times LLC”
 
-## Third‑Party Components
+Attribution must appear in at least one of the following:
 
-The Software may include Third‑Party Components subject to their own license terms. You agree to comply with those third‑party license terms. The Block Times LLC is not responsible for the maintenance, updates, or discontinuation of third‑party components and will not be liable for damages arising from such components.
-
----
-
-## Updates, Maintenance, and Support
-
-Updates, patches, and maintenance services are provided only where explicitly included in your service tier or in a separate written support agreement. The Block Times LLC has no obligation to provide ongoing updates, bug fixes, or support unless agreed in writing.
-
-Installing unauthorized modifications or third‑party patches may void any warranty or support obligations.
+* README or documentation
+* Application interface (if applicable)
+* Repository or download page
 
 ---
 
-## Warranty Disclaimer
+### 3.4 Substantial Modification Requirement (Anti-Clone Clause)
 
-Except where a limited warranty is expressly provided in a written agreement, the Software is provided **“AS IS”** and **“AS AVAILABLE”**, without warranties of any kind, whether express, implied, statutory, or otherwise, including but not limited to warranties of merchantability, fitness for a particular purpose, title, or non‑infringement.
+You may **not Distribute** the Software unless one of the following is true:
 
-The Block Times LLC does not warrant that the Software will be error‑free, uninterrupted, secure, or compatible with all systems or that it will meet any particular performance targets.
+#### A. Unmodified Distribution (Strict Conditions)
 
----
+You may redistribute the Original Work **only if**:
 
-## Limitation of Liability
+* It is **complete and unmodified**
+* It includes full attribution
+* It clearly states it is the **official, unmodified version**
+* You do **not present it as your own project**
 
-To the maximum extent permitted by applicable law, The Block Times LLC and its affiliates, licensors, and suppliers shall not be liable for any indirect, incidental, special, consequential, exemplary, or punitive damages, including but not limited to loss of profits, loss of data, business interruption, or loss of goodwill, arising out of or in connection with this EULA or the use or inability to use the Software, even if The Block Times LLC has been advised of the possibility of such damages.
+#### B. Modified Distribution (Required Standard)
 
-The total aggregate liability of The Block Times LLC for any claim arising out of or relating to this EULA or the Software shall not exceed the total amount actually paid by you to The Block Times LLC for the specific license or project giving rise to the claim during the twelve (12) months preceding the claim. This limitation applies regardless of the form of action, whether in contract, tort, strict liability, or otherwise.
+If distributing a Derivative Work, you must ensure:
 
----
+* The work includes **substantial, functional, or structural modifications**
+* The modifications are **clearly documented**
 
-## Indemnification
+**“Substantial modification” means changes that materially affect at least one of the following:**
 
-You agree to indemnify, defend, and hold harmless The Block Times LLC, its officers, directors, employees, agents, and affiliates from and against any and all claims, liabilities, losses, damages, costs, and expenses (including reasonable attorneys’ fees) arising out of or related to: (a) your breach of this EULA; (b) your unauthorized use, distribution, or modification of the Software; or (c) your violation of applicable law.
+* Core functionality or features
+* User interface or user experience
+* Application architecture or data handling
 
----
+**The following DO NOT qualify as substantial modifications:**
 
-## Term and Termination
-
-This EULA is effective upon the earlier of your first installation, access, or use of the Software and remains in effect until terminated.
-
-The Block Times LLC may terminate this EULA and your license immediately and without notice if you breach any provision of this EULA, use the Software outside the permitted scope, or engage in unauthorized distribution, reverse engineering, or misuse.
-
-Upon termination, you must immediately cease all use of the Software and, at The Block Times LLC’s direction, destroy or return all copies of the Software and related materials in your possession or control.
-
-Termination does not limit The Block Times LLC from pursuing any other remedies available at law or in equity.
-
----
-
-## Export Controls
-
-You agree to comply with all applicable export control laws and regulations. You shall not export, re‑export, or transfer the Software to any country, person, or entity prohibited by applicable law without obtaining any required governmental licenses or approvals.
+* Renaming the project
+* Changing branding, colors, or styling only
+* Minor text or configuration edits
+* Repackaging without functional change
 
 ---
 
-## Governing Law and Dispute Resolution
+## 4. Prohibited Actions
 
-This EULA shall be governed by and construed in accordance with the laws of the jurisdiction specified by The Block Times LLC in the final license (the “**Governing Jurisdiction**”), without regard to conflict of law principles.
+You may not:
 
-Any dispute arising out of or relating to this EULA shall be resolved exclusively in the competent courts of the Governing Jurisdiction, unless otherwise required by mandatory law. If required by applicable law, The Block Times LLC may seek injunctive or other equitable relief in any jurisdiction.
-
----
-
-## Changes to This EULA
-
-We may update or modify this EULA from time to time. Material changes will be posted on our website or otherwise communicated to Licensees. Continued use of the Software after publication of changes constitutes acceptance of the revised EULA.
+* Remove or alter copyright notices
+* Misrepresent authorship of the Original Work
+* Use trademarks, branding, or logos of The Block Times LLC without permission
+* Circumvent or attempt to bypass this license
 
 ---
 
-## Severability and Waiver
+## 5. Distribution Requirements
 
-If any provision of this EULA is held to be invalid or unenforceable, the remaining provisions will remain in full force and effect. Failure by The Block Times LLC to enforce any right or provision of this EULA will not constitute a waiver of such right or provision.
+Any Distribution must:
+
+* Include this license in full
+* Include attribution
+* Clearly indicate whether the work is modified
+* Provide a summary of changes (for Derivative Works)
 
 ---
 
-## Contact Information
+## 6. Disclaimer of Warranty
 
-For permissions, commercial licensing, or legal inquiries, contact: **contact@theblocktimes.com**. Include “License Inquiry” in the subject line.
+THE SOFTWARE IS PROVIDED **“AS IS”**, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO:
+
+* MERCHANTABILITY
+* FITNESS FOR A PARTICULAR PURPOSE
+* NON-INFRINGEMENT
 
 ---
 
-## Acceptance
+## 7. Limitation of Liability
 
-By installing, accessing, or using the Software, you confirm that you have read, understood, and agreed to be bound by this End‑User License Agreement in full.
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE BLOCK TIMES LLC SHALL NOT BE LIABLE FOR:
 
-**The Block Times LLC**
+* ANY DAMAGES
+* LOSS OF DATA
+* LOSS OF PROFITS
+* BUSINESS INTERRUPTION
+
+ARISING FROM THE USE OR INABILITY TO USE THE SOFTWARE.
+
+---
+
+## 8. Termination
+
+This license **automatically terminates** if you violate any term.
+
+Upon termination, you must:
+
+* Immediately cease use and distribution
+* Delete all copies of the Software in your possession
+
+---
+
+## 9. Governing Law
+
+This license shall be governed by applicable laws in the jurisdiction of The Block Times LLC, without regard to conflict of law principles.
+
+---
+
+## 10. Contact
+
+For commercial licensing or exceptions:
+
+**[team@theblocktimes.com](mailto:team@theblocktimes.com)**
+
+---
+
+## 11. Acceptance
+
+By using, copying, modifying, or distributing this Software, you agree to this License.
